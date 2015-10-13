@@ -1,0 +1,28 @@
+{
+  "name": "nbatodaybot",
+  "version": "0.0.1",
+  "description": "Telegram Bot that sends scores of the last matches in the NBA Championship",
+  "main": "nbatodaybot.js",
+  "scripts": {
+    "test": "node nbatodaybot.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/indiependente/nbatodaybot.git"
+  },
+  "keywords": [
+    "telegram",
+    "bot",
+    "nba",
+    "basket"
+  ],
+  "author": "indiependente",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/indiependente/nbatodaybot/issues"
+  },
+  "homepage": "https://github.com/indiependente/nbatodaybot",
+  "dependencies": {
+    "node-telegram-bot-api": "^0.15.0"
+  }
+}
