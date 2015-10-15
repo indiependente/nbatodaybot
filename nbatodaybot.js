@@ -28,9 +28,9 @@ bot.onText(/\/scores/, function (msg)
 			var scores = ''
 			for (m in body)
 			{
-				scores += body[m].vteam.name + ' ' + capitalize(body[m].vteam.abbr) + ' ' + \
-				body[m].vteam.finl + ' - ' + body[m].hteam.name + ' ' + capitalize(body[m].hteam.abbr) + ' ' + \
-				body[m].hteam.finl + '\n'
+				scores += body[m].vteam.name + ' ' + capitalize(body[m].vteam.abbr) + ' ' +
+					body[m].vteam.finl + ' - ' + body[m].hteam.name + ' ' + capitalize(body[m].hteam.abbr) + ' ' +
+					body[m].hteam.finl + '\n'
 			}
 			bot.sendMessage(chatId, scores)
 		}
