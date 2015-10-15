@@ -3,7 +3,7 @@ var TelegramBot = require('node-telegram-bot-api'),
 	request = require('request'),
 	moment = require('moment')
 
-var token = require('fs').readFileSync('tokenFile').toString()
+var token = require('fs').readFileSync('../data/tokenFile').toString()
 
 // See https://developers.openshift.com/en/node-js-environment-variables.html
 var port = process.env.OPENSHIFT_NODEJS_PORT

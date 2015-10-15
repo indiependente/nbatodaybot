@@ -23,6 +23,8 @@
   },
   "homepage": "https://github.com/indiependente/nbatodaybot",
   "dependencies": {
-    "node-telegram-bot-api": "^0.15.0"
+    "moment": "^2.10.6",
+    "node-telegram-bot-api": "^0.15.0",
+    "request": "^2.65.0"
   }
 }
