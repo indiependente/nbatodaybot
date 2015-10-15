@@ -25,9 +25,14 @@ bot.onText(/\/scores/, function (msg)
 	request('http://nbastaz-indiependente.rhcloud.com/matches?date='+moment().subtract({days:1}).format('MM-DD-YYYY'),
 		function (error, response, body)
 		{
+			body = JSON.parse(body)
 			var scores = ''
 			for (m in body)
 			{
+				if (body[m].vteam.name.indexOf('L.A.') > -1)
+					body[m].vteam.name = 'L.A.'
+				if (body[m].hteam.name.indexOf('L.A.') > -1)
+					body[m].hteam.name = 'L.A.'
 				scores += body[m].vteam.name + ' ' + capitalize(body[m].vteam.abbr) + ' ' +
 					body[m].vteam.finl + ' - ' + body[m].hteam.name + ' ' + capitalize(body[m].hteam.abbr) + ' ' +
 					body[m].hteam.finl + '\n'
