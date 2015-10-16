@@ -1,6 +1,7 @@
 // An example for OpenShift platform.
 var TelegramBot = require('node-telegram-bot-api'),
 	request = require('request'),
+	sync-request = require('sync-request'),
 	moment = require('moment')
 
 var token = require('fs').readFileSync('tokenFile').toString()
@@ -14,9 +15,19 @@ var bot = new TelegramBot(token, {webHook: {port: port, host: host}})
 // OpenShift enroutes :443 request to OPENSHIFT_NODEJS_PORT
 bot.setWebHook(domain+':443/bot'+token)
 
+
+var teams_staz = JSON.parse(syncrequest('GET', 'http://nbastaz-indiependente.rhcloud.com/teams').getBody().toString())
+var teams = {}
+for (t in teams_staz)
+{
+	teams[t] = teams_staz[t].team
+}
+
+
 bot.onText(/\/help/, function (msg)
 {
-	bot.sendMessage(msg.chat.id, 'Hello, I am NBA Today Bot.\nType "/scores" to get the latest results from the NBA championship.')
+	bot.sendMessage(msg.chat.id,
+		'Hello, I am NBA Today Bot.\nCommands: \n"/scores" to get the latest results from the NBA championship;\n"/highlights [team name]" to get the latest game recap video.')
 })
 
 bot.onText(/\/scores/, function (msg)
@@ -40,6 +51,40 @@ bot.onText(/\/scores/, function (msg)
 			bot.sendMessage(chatId, scores)
 		}
 	)
+})
+
+bot.onText(/\/highlights (.+)/, function (msg, match)
+{
+	var chatId = msg.chat.id
+	match = match[1].toLowerCase()
+
+	var team = undefined
+	if (match in teams)
+		team = teams[match].split(' ').pop()
+	else
+	{
+		for (t in teams)
+		{
+			if (teams[t].indexOf(capitalize(match)) > -1)
+				{
+					team = teams[t].split(' ').pop()
+				}
+		}
+	}
+	if (team===undefined)
+	{
+		bot.sendMessage(chatId, 'Search for this teams: '+Object.keys(teams).join(' '))
+	}
+	else
+	{
+		request('http://nbastaz-indiependente.rhcloud.com/highlight?abbr='+team,
+			function (error, response, body)
+			{
+				body = JSON.parse(body)
+				bot.sendMessage(chatId, body.url)
+			}
+		)
+	}
 })
 
 function capitalize(string) {
