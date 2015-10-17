@@ -77,7 +77,7 @@ bot.onText(/\/highlights (.+)/, function (msg, match)
 	}
 	if (team===undefined)
 	{
-		bot.sendMessage(chatId, 'Search for this teams: '+Object.keys(teams).sort().join(' '))
+		bot.sendMessage(chatId, 'Search for this teams: '+Object.keys(teams).sort().join(', '))
 	}
 	else
 	{
