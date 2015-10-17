@@ -4,7 +4,7 @@ var TelegramBot = require('node-telegram-bot-api'),
 	syncrequest = require('sync-request'),
 	moment = require('moment')
 
-var token = require('fs').readFileSync('tokenFile').toString()
+var token = require('fs').readFileSync('../data/tokenFile').toString()
 
 // See https://developers.openshift.com/en/node-js-environment-variables.html
 var port = process.env.OPENSHIFT_NODEJS_PORT
@@ -56,6 +56,10 @@ bot.onText(/\/scores/, function (msg)
 bot.onText(/\/highlights (.+)/, function (msg, match)
 {
 	var chatId = msg.chat.id
+
+	if (match[1] === '')
+		bot.sendMessage(chatId, 'Search for this teams: '+Object.keys(teams).sort().join(', '))
+
 	match = match[1].toLowerCase()
 
 	var team = undefined
@@ -73,15 +77,15 @@ bot.onText(/\/highlights (.+)/, function (msg, match)
 	}
 	if (team===undefined)
 	{
-		bot.sendMessage(chatId, 'Search for this teams: '+Object.keys(teams).join(' '))
+		bot.sendMessage(chatId, 'Search for this teams: '+Object.keys(teams).sort().join(' '))
 	}
 	else
 	{
 		request('http://nbastaz-indiependente.rhcloud.com/highlight?abbr='+team,
 			function (error, response, body)
 			{
-				body = JSON.parse(body)
-				bot.sendMessage(chatId, body.url)
+				var url = JSON.parse(JSON.parse(body)).url
+				bot.sendMessage(chatId, url)
 			}
 		)
 	}
