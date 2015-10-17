@@ -1,7 +1,7 @@
 // An example for OpenShift platform.
 var TelegramBot = require('node-telegram-bot-api'),
 	request = require('request'),
-	sync-request = require('sync-request'),
+	syncrequest = require('sync-request'),
 	moment = require('moment')
 
 var token = require('fs').readFileSync('tokenFile').toString()
