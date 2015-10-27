@@ -45,7 +45,7 @@ bot.onText(/\/scores/, function (msg)
 				if (body[m].hteam.name.indexOf('L.A.') > -1)
 					body[m].hteam.name = 'L.A.'
 				scores += body[m].vteam.name + ' ' + capitalize(body[m].vteam.abbr) + ' ' +
-					body[m].vteam.finl + ' - ' body[m].hteam.finl + ' ' + body[m].hteam.name + ' ' + capitalize(body[m].hteam.abbr) + '\n'
+					body[m].vteam.finl + ' - ' + body[m].hteam.finl + ' ' + body[m].hteam.name + ' ' + capitalize(body[m].hteam.abbr) + '\n'
 			}
 			bot.sendMessage(chatId, scores)
 		}
